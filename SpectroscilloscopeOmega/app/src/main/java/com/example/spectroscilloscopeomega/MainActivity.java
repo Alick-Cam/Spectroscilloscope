@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Listening for raw data
+    //Listening for raw data from spectroscilloscope
     void beginListenForData()
     {
         final Handler handler = new Handler();
