@@ -1,4 +1,3 @@
-
 #include <SoftwareSerial.h>
 SoftwareSerial BTSerial(10, 11); // RX | TX
 unsigned char data[100];

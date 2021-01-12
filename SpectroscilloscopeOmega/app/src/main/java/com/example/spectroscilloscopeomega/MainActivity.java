@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
                             byte[] rawBytes = new byte[byteCount];
                             inputStream.read(rawBytes);
                             bytesToInt = new int[byteCount];
+                            //Store data into global array so it can be accessed by other function
                             for (int x = 0 ; x < byteCount; x++) {
                                 bytesToInt[x] = rawBytes[x];
 //                                Log.d("ints", Integer.toString(bytesToInt[x]));
