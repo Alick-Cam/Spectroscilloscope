@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,10 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,18 +27,22 @@ public class MainActivity extends AppCompatActivity {
     //    private final String DEVICE_NAME="Spectroscilloscope";
     private final String DEVICE_ADDRESS = "98:D6:32:35:8F:C6";
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");//Serial Port Service ID
+    final Handler handler = new Handler();
+    ArrayList<Integer> list = new ArrayList <Integer> ();
     private BluetoothDevice device;
     private BluetoothSocket socket;
     private OutputStream outputStream;
     private InputStream inputStream;
+    int ByteCount = 0;
     Button startButton, sendButton, clearButton, stopButton;
     TextView textView;
     EditText editText;
     boolean deviceConnected = false;
-    Thread thread;
+    boolean calculateFFT = false;
     byte buffer[];
     int bufferPosition;
     boolean stopThread;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,48 +149,10 @@ public class MainActivity extends AppCompatActivity {
 
     void beginListenForData()
     {
-        final Handler handler = new Handler();
         stopThread = false;
         buffer = new byte[1024];
-        Thread thread  = new Thread(new Runnable()
-        {
-            public void run()
-            {
-                while(!Thread.currentThread().isInterrupted() && !stopThread)
-                {
-                    try
-                    {
-                        int byteCount = inputStream.available();
-                        if(byteCount > 0)
-                        {
-                            byte[] rawBytes = new byte[byteCount];
-                            inputStream.read(rawBytes);
-                            int[] bytesToInt = new int[byteCount];
-                            for (int x = 0 ; x < byteCount; x++) {
-                                bytesToInt[x] = rawBytes[x];
-                                Log.d("ints", Integer.toString(bytesToInt[x]));
-                            }
-                            final String string=new String(rawBytes,"UTF-8");
-
-                            handler.post(new Runnable() {
-                                public void run()
-                                {
-                                    textView.append(string);
-                                    textView.append("\n");
-
-                                }
-                            });
-
-                        }
-                    }
-                    catch (IOException ex)
-                    {
-                        stopThread = true;
-                    }
-                }
-            }
-        });
-
+        BeginListeningForData runnable = new BeginListeningForData();
+        Thread thread  = new Thread(runnable);
         thread.start();
     }
 
@@ -213,4 +183,72 @@ public class MainActivity extends AppCompatActivity {
     public void onClickClear(View view) {
         textView.setText("");
     }
+
+// Class to receive data
+class BeginListeningForData implements Runnable {
+
+    @Override
+    public void run() {
+        while(!Thread.currentThread().isInterrupted() && !stopThread)
+        {
+            try
+            {
+                int byteCount = inputStream.available();
+                if(byteCount > 0)
+                {
+                    byte[] rawBytes = new byte[byteCount];
+                    inputStream.read(rawBytes);
+
+                    for (int x = 0 ; x < byteCount; x++) {
+                        //converting to unsigned value
+                        byte aByte = rawBytes[x];
+                        int number = aByte & 0xff;
+                        list.add(number);
+                        Log.d("Data", Integer.toString(number));
+                    }
+
+                    // Use this to make the program aware of when the expected data has completely arrived
+                    if(list.size() == 32) calculateFFT = true;
+
+                    if(calculateFFT) {
+                        final String string=new String(rawBytes,"UTF-8");
+                        int[] twoByteData = new int[16];
+                        int a;
+                        for (int i = 0; i < 16; i++) {
+                            a = 0;
+                            a = list.get(2*i) << 8;
+                            twoByteData[i] = a + list.get(2*i + 1);
+                            Log.d("twoByteData", Integer.toString(twoByteData[i]));
+                        }
+
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run()
+                            {
+                                textView.append(string);
+                            }
+                        });
+                    }
+
+
+                }
+            }
+            catch (IOException ex)
+            {
+                stopThread = true;
+            }
+        }
+    }
+}
+
+//Class to perform Fast Fourier Transform
+class FastFourierTransform implements Runnable {
+    @Override
+    public void run() {
+
+    }
+}
+
+
 }
