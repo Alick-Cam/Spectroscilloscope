@@ -1,0 +1,8 @@
+git branch branchname  // creates branch
+git branch -a  // shows all branches 
+git checkout branchname // goes to the branch that you want to work on in ourcase branchname
+git checkout master // switches back to the master branch
+git branch -d branchname // deletes branchname once it has been merged with master
+git branch -D branchnamre // deletes branchname before it has been merged
+
+
