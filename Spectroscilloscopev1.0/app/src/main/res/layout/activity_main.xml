@@ -60,6 +60,17 @@
         android:onClick="onClickStop"/>
 
     <Button
+        android:id="@+id/buttonFFT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/buttonClear"
+        android:layout_toRightOf="@+id/buttonClear"
+        android:onClick="onClickFFT"
+        android:text="FFT" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Clear"
