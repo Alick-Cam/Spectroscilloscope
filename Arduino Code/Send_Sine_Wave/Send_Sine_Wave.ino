@@ -1,6 +1,10 @@
 #include <SoftwareSerial.h>
 SoftwareSerial BTSerial(10, 11); // RX | TX
-unsigned char data[32] = {0,0,3,255,3,255,0,0,0,0,3,255,3,255,0,0,0,0,3,255,3,255,0,0,0,0,3,255,3,255,0,0};
+#define nPoints 16
+#define rawnPoints 32
+unsigned char data[rawnPoints] = {0,0,3,255,3,255,0,0,0,0,3,255,3,255,0,0,0,0,3,255,3,255,0,0,0,0,3,255,3,255,0,0};
+
+
 
 
 void setup()
@@ -10,15 +14,18 @@ void setup()
  
 // for (int i = 0 ; i < 32; i++)
 // Serial.println(data[i]);
-  uint16_t arr[16];
-  uint16_t a;
-  //convert to 2 byte data
-  for(int i = 0; i < 16; i++) {
-      a = 0;
-      a = data[2*i]<<8;
-      arr[i] = a + data[2*i+1];
-    Serial.println(arr[i]);
-  }
+//  Serial.println();
+//    Serial.println();
+//      Serial.println();
+//  uint16_t arr[nPoints];
+//  uint16_t a; // Temporary holder
+//  //convert to 2 byte data
+//  for(int i = 0; i < nPoints; i++) {
+//      a = 0;
+//      a = data[2*i]<<8;
+//      arr[i] = a + data[2*i+1];
+//    Serial.println(arr[i]);
+//  }
   
  
   BTSerial.begin(9600);  // HC-05 default speed in AT command more
@@ -29,7 +36,7 @@ void loop()
   // Feed any data from bluetooth to Terminal.
   if (BTSerial.available()) {
    if (BTSerial.read() == 't') {
-      for(unsigned char x = 0; x<32; x++) {
+      for(unsigned char x = 0; x<rawnPoints; x++) {
       Serial.println("In the loop");
       BTSerial.write(data[x]);
       }  

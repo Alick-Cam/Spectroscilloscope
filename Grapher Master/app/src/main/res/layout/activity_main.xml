@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FastFourierTransformActivity">
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connectButton" />
+
+    <Button
+        android:id="@+id/connectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="16dp"
+        android:onClick="onClickConnect"
+        android:text="@string/connect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/beginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="261dp"
+        android:onClick="onClickStartTransmission"
+        android:text="@string/begin"
+        app:layout_constraintBottom_toTopOf="@+id/chart1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/graphButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="286dp"
+        android:layout_marginEnd="286dp"
+        android:onClick="onClickFFT"
+        android:text="@string/graph"
+        app:layout_constraintBottom_toTopOf="@+id/chart1"
+        app:layout_constraintEnd_toEndOf="@+id/stopButton"
+        app:layout_constraintStart_toStartOf="@+id/beginButton" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="39dp"
+        android:onClick="onClickStop"
+        android:text="@string/stop"
+        app:layout_constraintBottom_toTopOf="@+id/chart1"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

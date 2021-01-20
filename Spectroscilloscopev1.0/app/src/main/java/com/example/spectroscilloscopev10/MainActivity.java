@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
-    //    private final String DEVICE_NAME="Spectroscilloscope";
+
     private final String DEVICE_ADDRESS = "98:D6:32:35:8F:C6";
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");//Serial Port Service ID
     final Handler handler = new Handler();
@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private InputStream inputStream;
     Button startButton, sendButton, clearButton, stopButton, buttonFFT;
     TextView textView;
-    EditText editText;
-
     byte buffer[];
     int bufferPosition;
     //StateVariables
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         sendButton = (Button) findViewById(R.id.buttonSend);
         clearButton = (Button) findViewById(R.id.buttonClear);
         stopButton = (Button) findViewById(R.id.buttonStop);
-        editText = (EditText) findViewById(R.id.editText);
         textView = (TextView) findViewById(R.id.textView);
         buttonFFT = (Button) findViewById(R.id.buttonFFT);
         setUiEnabled(false);
@@ -274,6 +271,7 @@ class FastFourierTransform implements Runnable {
                 	Abs[a] = FFTValues[a].abs();
                     Log.d("Magnitude", Double.toString(Abs[a]));
                 }
+
                 stopFFTThread = true;
         }
     }

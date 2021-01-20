@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">graphMaster</string>
+    <string name="connect">Connect</string>
+    <string name="begin">Begin</string>
+    <string name="graph">Graph</string>
+    <string name="stop">Stop</string>
+</resources>

@@ -104,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
             //limit number of visible entries
             mChart.setVisibleXRange(6);
 
+            // scaling can now only be done on x- and y-axis separately
+            mChart.setPinchZoom(false);
+
             //scroll to the last entry
             mChart.moveViewToX(data.getXValCount() - 7);
         }
