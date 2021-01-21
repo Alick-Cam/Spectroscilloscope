@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private InputStream inputStream;
     Handler handler = new Handler();
     byte buffer[];
+
     //StateVariables
     boolean stopBTThread;
     boolean stopFFTThread;
@@ -54,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 ArrayList<BarEntry> entries = new ArrayList<BarEntry>(); //To pass to BarDataSet
-BarDataSet dataSet = new BarDataSet(entries, "frequencies"); //To pass to BarData
-BarData Data = new BarData(dataSet);  // To pass to BarChart
-BarChart chart;
+BarDataSet barDataSet = new BarDataSet(entries, "frequencies"); //To pass to BarData
+BarData barData = new BarData(barDataSet);  // To pass to BarChart
+BarChart barChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +66,13 @@ BarChart chart;
         setTitle("BarChart - Objective 1");
 
         //Grab Buttons
-        connectButton = (Button) findViewById(R.id.connectButton);
-        sendButton = (Button) findViewById(R.id.beginButton);
-        clearButton = (Button) findViewById(R.id.graphButton);
-        stopButton = (Button) findViewById(R.id.stopButton);
+        connectButton = findViewById(R.id.connectButton);
+        sendButton = findViewById(R.id.beginButton);
+        clearButton = findViewById(R.id.graphButton);
+        stopButton = findViewById(R.id.stopButton);
 
         //Grab Chart
-        chart = findViewById(R.id.chart1);
+        barChart = findViewById(R.id.chart1);
 
 //        for (int i = 0; i<nPoints; i++ ) {
 //            if(i%2 == 0)
@@ -80,33 +81,28 @@ BarChart chart;
 //        }
 
 
-        chart.setData(Data);
+        barChart.setData(barData);
 
         XAxis xAxis = new XAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
 
-
-
-        YAxis yAxisL = chart.getAxisLeft();
+        YAxis yAxisL = barChart.getAxisLeft();
         yAxisL.setAxisMinimum(0f);
         yAxisL.setAxisMaximum(10000f);
 
-        YAxis yAxisR = chart.getAxisRight();
+        YAxis yAxisR = barChart.getAxisRight();
         yAxisR.setAxisMinimum(0f);
         yAxisR.setAxisMaximum(10000f);
 
-
-        chart.setDrawValueAboveBar(false); //works
-        chart.setDoubleTapToZoomEnabled(false);//works
-        chart.setPinchZoom(false); //works
-        chart.setDrawBarShadow(false);//works
-        chart.setDrawBorders(true); //works
+        barChart.setDrawValueAboveBar(false); //works
+        barChart.setDoubleTapToZoomEnabled(false);//works
+        barChart.setPinchZoom(false); //works
+        barChart.setDrawBarShadow(false);//works
+        barChart.setDrawBorders(true); //works
         Description description = new Description();
         description.setText("Frequency Spectrum\nAlick Campbell");
-        chart.setDescription(description);
-
-
+        barChart.setDescription(description);
 
     }
 
@@ -219,19 +215,19 @@ BarChart chart;
 
     private void createBarDataSet() {
 
-        dataSet.setValues(entries);
+        barDataSet.setValues(entries);
         Log.d("State?", "Updated BarDataSet with BarEntries");
-        Log.d("Entries in Dataset", Integer.toString(dataSet.getEntryCount()));
-        Data.removeDataSet(0);
-        Data.notifyDataChanged();
-        Data.addDataSet(dataSet);
-        Data.notifyDataChanged();
-        Log.d("Check BarData", Integer.toString(Data.getDataSetCount()));
+        Log.d("Entries in Dataset", Integer.toString(barDataSet.getEntryCount()));
+        barData.removeDataSet(0);
+        barData.notifyDataChanged();
+        barData.addDataSet(barDataSet);
+        barData.notifyDataChanged();
+        Log.d("Check BarData", Integer.toString(barData.getDataSetCount()));
         Log.d("State?", "Updated BarData with BarDataSet");
-        chart.notifyDataSetChanged();
-        chart.setData(Data);
+        barChart.notifyDataSetChanged();
+        barChart.setData(barData);
         Log.d("State?", "Posted Data to Chart");
-        chart.invalidate();
+        barChart.invalidate();
         Log.d("State?", "invalidate()");
 
 
