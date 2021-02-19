@@ -165,7 +165,6 @@ BarChart barChart;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
 
 
