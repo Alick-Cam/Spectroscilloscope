@@ -9,15 +9,15 @@ unsigned char data[2 * nPoints] = {0,0,3,255,3,255,0,0,0,0,3,255,3,255,0,0,0,0,3
 int samples[nPoints];
 
 // function to convert samples from ADC into an array of 8 bit chars. Every 2 byte represents a single value obtained from the ADC
-void toUnsignedChar() {
-  for (int i = 0; i < nPoints; i++) {
-    data[2*i] = samples[i] >> 8;
-    data[2*i+1] = samples[i] & 0b0000000011111111;
-  }
-}
+//void toUnsignedChar() {
+//  for (int i = 0; i < nPoints; i++) {
+//    data[2*i] = samples[i] >> 8;
+//    data[2*i+1] = samples[i] & 0b0000000011111111;
+//  }
+//}
   
   
-}
+
 
 void setup()
 {
