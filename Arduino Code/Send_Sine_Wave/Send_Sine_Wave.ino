@@ -20,7 +20,8 @@ void loop()
   if (BTSerial.available()) {
    if (BTSerial.read() == 't') {
       for(unsigned char x = 0; x<rawnPoints; x++) {
-      Serial.println("In the loop");
+      Serial.print("In the loop ");
+      Serial.println(x);
       BTSerial.write(data[x]);
       }  
    }
