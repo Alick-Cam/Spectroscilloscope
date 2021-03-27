@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private final String DEVICE_ADDRESS = "98:D6:32:35:8F:C6";
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");//Serial Port Service ID
     private final float ts = 5e-6f; // minimum time between data points
-    private final int nPoints = 16; // Number of data points
+    private final int nPoints = 256; // Number of data points
 
     ArrayList<Integer> temp = new ArrayList <Integer> ();
 
