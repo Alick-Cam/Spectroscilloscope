@@ -15218,12 +15218,12 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <part name="C1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="22pF"/>
 <part name="Q1" library="crystal" library_urn="urn:adsk.eagle:library:204" deviceset="CRYSTAL" device="HC49U-V" package3d_urn="urn:adsk.eagle:package:12075/1" value="16MHz"/>
 <part name="SUPPLY1" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
-<part name="C11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="100nF"/>
+<part name="C11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="0.1uF"/>
 <part name="SUPPLY2" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="SUPPLY3" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="R1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="10k"/>
 <part name="P+1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
-<part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="100nF"/>
+<part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="0.1uF"/>
 <part name="SUPPLY4" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="R2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="10k"/>
 <part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
@@ -15247,20 +15247,20 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <part name="HC05" library="diy-modules" deviceset="WIRELESS-BLUETOOTH-HC-05" device=""/>
 <part name="P+7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="SUPPLY11" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
-<part name="R11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="1k"/>
-<part name="R12" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="2k"/>
+<part name="R8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="1k"/>
+<part name="R9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="2k"/>
 <part name="SUPPLY12" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
-<part name="D7" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="BAT81" device="" package3d_urn="urn:adsk.eagle:package:43348/1"/>
-<part name="D8" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="BAT81" device="" package3d_urn="urn:adsk.eagle:package:43348/1"/>
-<part name="D9" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="BAT81" device="" package3d_urn="urn:adsk.eagle:package:43348/1"/>
-<part name="D10" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="BAT81" device="" package3d_urn="urn:adsk.eagle:package:43348/1"/>
+<part name="D3" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="BAT81" device="" package3d_urn="urn:adsk.eagle:package:43348/1"/>
+<part name="D4" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="BAT81" device="" package3d_urn="urn:adsk.eagle:package:43348/1"/>
+<part name="D5" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="BAT81" device="" package3d_urn="urn:adsk.eagle:package:43348/1"/>
+<part name="D6" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="BAT81" device="" package3d_urn="urn:adsk.eagle:package:43348/1"/>
 <part name="SUPPLY17" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="P+8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="P+9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="SUPPLY18" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="R5" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="1k"/>
 <part name="PROBESELECT" library="special" library_urn="urn:adsk.eagle:library:367" deviceset="SW_DIP-1" device="" package3d_urn="urn:adsk.eagle:package:26661/1"/>
-<part name="R15" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="10k"/>
+<part name="R10" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="10k"/>
 <part name="SUPPLY20" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="P+12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="U$1" library="MCP3004-I_P" deviceset="MCP3004-I/P" device=""/>
@@ -15270,14 +15270,14 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <part name="IC1" library="linear" library_urn="urn:adsk.eagle:library:262" deviceset="78*" device="TV" package3d_urn="urn:adsk.eagle:package:16417/2" technology="05"/>
 <part name="SUPPLY13" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="SUPPLY14" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
-<part name="C8" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1" value="100nF"/>
+<part name="C8" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1" value="0.1uF"/>
 <part name="C9" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1" value="10uF"/>
-<part name="C10" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1" value="470uF"/>
+<part name="C10" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1" value="220uF"/>
 <part name="P+13" library="supply1" deviceset="+12V" device=""/>
 <part name="P+14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="SPST" library="Rembrandt Electronics - Terminal Block 3-5mm v1-0" deviceset="TERMINAL-BLOCK-3.5MM-2-PIN" device="-LONG-PAD"/>
 <part name="SUPPLY10" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
-<part name="R17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="1k"/>
+<part name="R11" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="1k"/>
 <part name="C12" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="10nF"/>
 <part name="SUPPLY9" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="U3" library="MCP6024-I_P" deviceset="MCP6024-I/P" device=""/>
@@ -15430,30 +15430,30 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <instance part="SUPPLY11" gate="GND" x="93.98" y="-10.16" smashed="yes" rot="R270">
 <attribute name="VALUE" x="90.805" y="-8.255" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="R11" gate="G$1" x="33.02" y="12.7" smashed="yes" rot="R180">
+<instance part="R8" gate="G$1" x="33.02" y="12.7" smashed="yes" rot="R180">
 <attribute name="NAME" x="36.83" y="11.2014" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="36.83" y="16.002" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="R12" gate="G$1" x="48.26" y="5.08" smashed="yes" rot="R270">
+<instance part="R9" gate="G$1" x="48.26" y="5.08" smashed="yes" rot="R270">
 <attribute name="NAME" x="49.7586" y="8.89" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="44.958" y="8.89" size="1.778" layer="96" rot="R270"/>
 </instance>
 <instance part="SUPPLY12" gate="GND" x="48.26" y="-5.08" smashed="yes">
 <attribute name="VALUE" x="46.355" y="-8.255" size="1.778" layer="96"/>
 </instance>
-<instance part="D7" gate="1" x="-101.6" y="-147.32" smashed="yes" rot="R90">
+<instance part="D3" gate="1" x="-101.6" y="-147.32" smashed="yes" rot="R90">
 <attribute name="NAME" x="-102.0826" y="-144.78" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="-99.2886" y="-144.78" size="1.778" layer="96" rot="R270"/>
 </instance>
-<instance part="D8" gate="1" x="-101.6" y="-134.62" smashed="yes" rot="R90">
+<instance part="D4" gate="1" x="-101.6" y="-134.62" smashed="yes" rot="R90">
 <attribute name="NAME" x="-102.0826" y="-132.08" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="-99.2886" y="-132.08" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="D9" gate="1" x="-162.56" y="-12.7" smashed="yes" rot="R90">
+<instance part="D5" gate="1" x="-162.56" y="-12.7" smashed="yes" rot="R90">
 <attribute name="NAME" x="-160.02" y="-12.2174" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-160.2486" y="-10.16" size="1.778" layer="96"/>
 </instance>
-<instance part="D10" gate="1" x="-162.56" y="-22.86" smashed="yes" rot="R90">
+<instance part="D6" gate="1" x="-162.56" y="-22.86" smashed="yes" rot="R90">
 <attribute name="NAME" x="-160.5026" y="-22.86" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-160.2486" y="-20.32" size="1.778" layer="96"/>
 </instance>
@@ -15477,7 +15477,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <attribute name="NAME" x="59.055" y="-116.84" size="1.778" layer="95" rot="R270"/>
 <attribute name="VALUE" x="-309.88" y="20.32" size="1.778" layer="96" rot="R270"/>
 </instance>
-<instance part="R15" gate="G$1" x="55.88" y="-96.52" smashed="yes" rot="R90">
+<instance part="R10" gate="G$1" x="55.88" y="-96.52" smashed="yes" rot="R90">
 <attribute name="NAME" x="54.3814" y="-100.33" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="59.182" y="-100.33" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -15536,7 +15536,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <instance part="SUPPLY10" gate="GND" x="-43.18" y="-134.62" smashed="yes">
 <attribute name="VALUE" x="-45.085" y="-137.795" size="1.778" layer="96"/>
 </instance>
-<instance part="R17" gate="G$1" x="-177.8" y="-101.6" smashed="yes" rot="R180">
+<instance part="R11" gate="G$1" x="-177.8" y="-101.6" smashed="yes" rot="R180">
 <attribute name="NAME" x="-173.99" y="-103.0986" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="-173.99" y="-98.298" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -15716,7 +15716,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 </segment>
 <segment>
 <pinref part="SUPPLY12" gate="GND" pin="GND"/>
-<pinref part="R12" gate="G$1" pin="2"/>
+<pinref part="R9" gate="G$1" pin="2"/>
 <wire x1="48.26" y1="-2.54" x2="48.26" y2="0" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -15725,13 +15725,13 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <wire x1="-297.18" y1="-27.94" x2="-302.26" y2="-27.94" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="D10" gate="1" pin="A"/>
+<pinref part="D6" gate="1" pin="A"/>
 <pinref part="SUPPLY17" gate="GND" pin="GND"/>
 <wire x1="-162.56" y1="-27.94" x2="-162.56" y2="-25.4" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY18" gate="GND" pin="GND"/>
-<pinref part="D7" gate="1" pin="A"/>
+<pinref part="D3" gate="1" pin="A"/>
 <wire x1="-101.6" y1="-154.94" x2="-101.6" y2="-149.86" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -15872,17 +15872,17 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <pinref part="P+7" gate="VCC" pin="VCC"/>
 </segment>
 <segment>
-<pinref part="D9" gate="1" pin="C"/>
+<pinref part="D5" gate="1" pin="C"/>
 <pinref part="P+8" gate="VCC" pin="VCC"/>
 <wire x1="-162.56" y1="-10.16" x2="-162.56" y2="-7.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="D8" gate="1" pin="C"/>
+<pinref part="D4" gate="1" pin="C"/>
 <pinref part="P+9" gate="VCC" pin="VCC"/>
 <wire x1="-101.6" y1="-132.08" x2="-101.6" y2="-127" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="R15" gate="G$1" pin="2"/>
+<pinref part="R10" gate="G$1" pin="2"/>
 <pinref part="P+12" gate="VCC" pin="VCC"/>
 <wire x1="55.88" y1="-91.44" x2="55.88" y2="-86.36" width="0.1524" layer="91"/>
 </segment>
@@ -15999,10 +15999,10 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <pinref part="U2" gate="A" pin="VOUTA"/>
 <wire x1="-139.7" y1="-45.72" x2="-142.24" y2="-45.72" width="0.1524" layer="91"/>
 <label x="-93.98" y="-134.62" size="1.778" layer="95" xref="yes"/>
-<pinref part="D10" gate="1" pin="C"/>
+<pinref part="D6" gate="1" pin="C"/>
 <wire x1="-162.56" y1="-20.32" x2="-162.56" y2="-17.78" width="0.1524" layer="91"/>
 <junction x="-162.56" y="-17.78"/>
-<pinref part="D9" gate="1" pin="A"/>
+<pinref part="D5" gate="1" pin="A"/>
 <wire x1="-162.56" y1="-15.24" x2="-162.56" y2="-17.78" width="0.1524" layer="91"/>
 <wire x1="-139.7" y1="-45.72" x2="-93.98" y2="-45.72" width="0.1524" layer="91"/>
 <wire x1="-93.98" y1="-45.72" x2="-93.98" y2="-134.62" width="0.1524" layer="91"/>
@@ -16022,15 +16022,15 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <segment>
 <pinref part="U2" gate="A" pin="VOUTC"/>
 <wire x1="-142.24" y1="-55.88" x2="-134.62" y2="-55.88" width="0.1524" layer="91"/>
-<pinref part="R17" gate="G$1" pin="1"/>
+<pinref part="R11" gate="G$1" pin="1"/>
 <wire x1="-134.62" y1="-55.88" x2="-134.62" y2="-101.6" width="0.1524" layer="91"/>
 <wire x1="-134.62" y1="-101.6" x2="-172.72" y2="-101.6" width="0.1524" layer="91"/>
 <wire x1="-134.62" y1="-101.6" x2="-134.62" y2="-142.24" width="0.1524" layer="91"/>
 <wire x1="-134.62" y1="-142.24" x2="-101.6" y2="-142.24" width="0.1524" layer="91"/>
 <junction x="-134.62" y="-101.6"/>
-<pinref part="D7" gate="1" pin="C"/>
+<pinref part="D3" gate="1" pin="C"/>
 <wire x1="-101.6" y1="-142.24" x2="-101.6" y2="-144.78" width="0.1524" layer="91"/>
-<pinref part="D8" gate="1" pin="A"/>
+<pinref part="D4" gate="1" pin="A"/>
 <wire x1="-101.6" y1="-137.16" x2="-101.6" y2="-142.24" width="0.1524" layer="91"/>
 <junction x="-101.6" y="-142.24"/>
 <label x="-101.6" y="-142.24" size="1.778" layer="95" xref="yes"/>
@@ -16043,9 +16043,9 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <label x="96.52" y="-5.08" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="R11" gate="G$1" pin="1"/>
+<pinref part="R8" gate="G$1" pin="1"/>
 <wire x1="38.1" y1="12.7" x2="48.26" y2="12.7" width="0.1524" layer="91"/>
-<pinref part="R12" gate="G$1" pin="1"/>
+<pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="48.26" y1="12.7" x2="48.26" y2="10.16" width="0.1524" layer="91"/>
 <label x="48.26" y="12.7" size="1.778" layer="95" xref="yes"/>
 </segment>
@@ -16078,7 +16078,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 </net>
 <net name="N$11" class="0">
 <segment>
-<pinref part="R11" gate="G$1" pin="2"/>
+<pinref part="R8" gate="G$1" pin="2"/>
 <pinref part="U1" gate="A" pin="PD1"/>
 <wire x1="27.94" y1="12.7" x2="17.78" y2="12.7" width="0.1524" layer="91"/>
 </segment>
@@ -16100,7 +16100,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <net name="1X/10X" class="0">
 <segment>
 <pinref part="PROBESELECT" gate="G$1" pin="2"/>
-<pinref part="R15" gate="G$1" pin="1"/>
+<pinref part="R10" gate="G$1" pin="1"/>
 <wire x1="55.88" y1="-114.3" x2="55.88" y2="-106.68" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="-106.68" x2="55.88" y2="-101.6" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="-106.68" x2="73.66" y2="-106.68" width="0.1524" layer="91"/>
@@ -16226,7 +16226,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <wire x1="-190.5" y1="-76.2" x2="-190.5" y2="-55.88" width="0.1524" layer="91"/>
 <pinref part="U2" gate="A" pin="VINC-"/>
 <wire x1="-190.5" y1="-55.88" x2="-177.8" y2="-55.88" width="0.1524" layer="91"/>
-<pinref part="R17" gate="G$1" pin="2"/>
+<pinref part="R11" gate="G$1" pin="2"/>
 <wire x1="-182.88" y1="-101.6" x2="-190.5" y2="-101.6" width="0.1524" layer="91"/>
 <wire x1="-190.5" y1="-101.6" x2="-190.5" y2="-76.2" width="0.1524" layer="91"/>
 <junction x="-190.5" y="-76.2"/>
