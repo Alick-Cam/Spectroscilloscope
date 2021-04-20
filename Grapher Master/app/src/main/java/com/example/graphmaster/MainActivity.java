@@ -22,6 +22,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 
 
 import java.io.IOException;
@@ -36,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final String DEVICE_ADDRESS = "98:D6:32:35:8F:C6";
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");//Serial Port Service ID
-    ArrayList<Integer> list = new ArrayList <Integer> ();
-    int nPoints = 16; // Number of frequency bins
+    ArrayList<Integer> temp = new ArrayList <Integer> ();
+    int nPoints = 512; // Number of frequency bins
     Complex[] data = new Complex[nPoints];
     private BluetoothDevice device;
     private BluetoothSocket socket;
@@ -58,6 +59,10 @@ ArrayList<BarEntry> entries = new ArrayList<BarEntry>(); //To pass to BarDataSet
 BarDataSet barDataSet = new BarDataSet(entries, "frequencies"); //To pass to BarData
 BarData barData = new BarData(barDataSet);  // To pass to BarChart
 BarChart barChart;
+
+    boolean probeselect = false;
+    boolean channelselect = true;
+    private final float STEPSIZE = 4.8828125e-3f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +94,6 @@ BarChart barChart;
 
         YAxis yAxisL = barChart.getAxisLeft();
         yAxisL.setAxisMinimum(0f);
-        yAxisL.setAxisMaximum(10000f);
-
-        YAxis yAxisR = barChart.getAxisRight();
-        yAxisR.setAxisMinimum(0f);
-        yAxisR.setAxisMaximum(10000f);
 
         barChart.setDrawValueAboveBar(false); //works
         barChart.setDoubleTapToZoomEnabled(false);//works
@@ -232,6 +232,28 @@ BarChart barChart;
 
     }
 
+    public float calculateSignal(boolean probeselect, boolean channelselect, int datapoint) {
+        // this function will calculate the actucal value of each datapoint and return it
+        /*
+         * probeselect = true => x10 probe else x1 probe
+         * channelselect = true => x10 adc channel gain else x1 adc channel gain was applied*/
+        float voltage = datapoint * STEPSIZE;
+        // 2.5V was added to shift the signal up for the MCU ADC, Therefore,
+        voltage -= 2.5;
+        if(channelselect) {
+            voltage /= 10; // voltage at input of x10 gain circuit
+        }
+        /* following voltage at input of the front-end attenuator (voltage divider
+        Vin => 909k => voltage => 100k => 0.1u => GND */
+        voltage*=1009;
+        voltage/=100;
+        if(probeselect) {
+            // if x10 probe was selected (meaning signal was divided by 10 before arriving)
+            voltage*=10;
+        }
+        return voltage;
+    }
+
     void beginListenForData() {
         stopBTThread = false;
         buffer = new byte[1024];
@@ -259,33 +281,33 @@ BarChart barChart;
                             //converting to unsigned value
                             byte aByte = rawBytes[i];
                             int number = aByte & 0xff;
-                            list.add(number);
+                            temp.add(number);
                             Log.d("Data", Integer.toString(number));
                         }
 
                         // Use this to make the program aware of when the expected data has completely arrived
-                        if(list.size() == (nPoints * 2)) dataReady = true;
+                        if(temp.size() == (nPoints * 2)) {
+                            dataReady = true;
+                        }
 
                         if(dataReady) {
                             int[] twoByteData = new int[nPoints];
+                            final ArrayList<Entry> entries = new ArrayList<>();
                             int a;
                             for (int i = 0; i < nPoints; i++) {
-                                a = list.get(2*i) << 8;
-                                twoByteData[i] = a + list.get(2*i + 1);
-                                data[i] = new Complex(twoByteData[i], 0);
-//                                entries.add(i, new BarEntry(i, twoByteData[i]));
+                                a = temp.get(2*i) << 8;
+                                twoByteData[i] = a + temp.get(2*i + 1);
+                                data[i] = new Complex(calculateSignal(probeselect,channelselect, twoByteData[i]), 0);
                                 Log.d("twoByteData", Integer.toString(twoByteData[i])+", index: "+Integer.toString(i));
+                                if(i == (nPoints - 1) ) {
+                                    // reset variables so more data can be collected
+                                    temp.clear();
+                                    dataReady = false;
+                                    rawBytes = null;
+                                }
                             }
 
 
-
-//                            handler.post(new Runnable() {
-//                                @Override
-//                                public void run()
-//                                {
-//                                    createBarDataSet();
-//                                }
-//                            });
                         }
 
 
