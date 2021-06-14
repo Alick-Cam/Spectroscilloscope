@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Spectroscilloscope Prime</string>
+    <string name="connect">Connect</string>
+    <string name="capture">Capture</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="spectrum">Spectrum Analysis</string>
+    <string name="probeS">x1/x10</string>
+    <string name="FreqS">HF/LF</string>
+    <string name="begin">Begin</string>
+    <string name="graph">Graph</string>
+    <string name="stop">Stop</string>
+    <string name="back">Back to Oscilloscope</string>
+</resources>

@@ -1,4 +1,4 @@
-package com.example.graphmaster;
+package com.example.spectroscilloscopeprime;
 
 import java.util.Objects;
 
@@ -124,6 +124,3 @@ public class Complex {
     }
 
 }
-
-
-

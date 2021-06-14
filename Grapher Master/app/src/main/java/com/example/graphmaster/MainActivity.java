@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     boolean dataReady = false;
     Button connectButton, sendButton, clearButton, stopButton;
 
-
 ArrayList<BarEntry> entries = new ArrayList<BarEntry>(); //To pass to BarDataSet
 BarDataSet barDataSet = new BarDataSet(entries, "frequencies"); //To pass to BarData
 BarData barData = new BarData(barDataSet);  // To pass to BarChart
