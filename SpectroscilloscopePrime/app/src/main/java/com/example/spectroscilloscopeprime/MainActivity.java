@@ -41,10 +41,13 @@ public class MainActivity extends AppCompatActivity {
     private final String DEVICE_ADDRESS = "98:D6:32:35:8F:C6";
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");//Serial Port Service ID
     // string to tag the data that will be sent to the Spectrum Analyzer Activity
-    public static final String EXTRA_ENTRIES = "com.example.spectroscilloscopeprime.EXTRA_ENTRIES";
+    public static final String EXTRA_DATA = "com.example.spectroscilloscopeprime.EXTRA_DATA";
+    public static final String EXTRA_FSEL = "com.example.spectroscilloscopeprime.EXTRA_FSEL";
+    public static final String EXTRA_PSEL = "com.example.spectroscilloscopeprime.EXTRA_PSEL";
+    public static final String EXTRA_CSEL = "com.example.spectroscilloscopeprime.EXTRA_CSEL";
     private final float ts = 5e-6f; // minimum time between data points
     private final int nPoints = 512; // Number of data points
-    private final float STEPSIZE = 4.8828125e-3f;
+    public static final float STEPSIZE = 4.8828125e-3f;
 
     // this is the list that accepts data from the bluetooth socket
     ArrayList<Integer> temp = new ArrayList <Integer> ();
@@ -263,7 +266,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, SpectrumAnalyzer.class);
-        intent.putIntegerArrayListExtra(EXTRA_ENTRIES, twoByteData);
+        intent.putIntegerArrayListExtra(EXTRA_DATA, twoByteData);
+        intent.putExtra(EXTRA_PSEL, probeselect);
+        intent.putExtra(EXTRA_FSEL, frequencyselect);
+        intent.putExtra(EXTRA_CSEL, channelselect);
         startActivity(intent);
     }
 

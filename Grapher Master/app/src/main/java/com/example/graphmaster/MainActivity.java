@@ -334,21 +334,19 @@ BarChart barChart;
                 Complex[] FFTValues;
                 FFTValues = fft.fft(x); //Store FFt values
                 double[] Abs = new double[nPoints]; // Store magnitudes
+
                 for (int a = 0; a < x.length; a++) {
                     Log.d("Frequencies", "Re "+Double.toString(FFTValues[a].re())+" Im "+ Double.toString(FFTValues[a].im()));
                     Abs[a] = FFTValues[a].abs();
-//                    entries.add(new BarEntry(a, (float) Abs[a]));
                     entries.add(a, new BarEntry(a, (float)Abs[a]));
                     Log.d("Magnitude", Double.toString(Abs[a]));
                 }
-
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         createBarDataSet();
                     }
                 });
-
                 stopFFTThread = true;
             }
         }

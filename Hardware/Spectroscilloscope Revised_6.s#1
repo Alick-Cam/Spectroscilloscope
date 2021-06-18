@@ -24971,10 +24971,10 @@ distributor Farnell 149-452</description>
 </variantdefs>
 <classes>
 <class number="0" name="default" width="0.4064" drill="0">
-<clearance class="0" value="0.1016"/>
+<clearance class="0" value="0.2032"/>
 </class>
 <class number="1" name="Power Lines" width="0.762" drill="0">
-<clearance class="1" value="0.129540625"/>
+<clearance class="1" value="0.2032"/>
 </class>
 </classes>
 <parts>

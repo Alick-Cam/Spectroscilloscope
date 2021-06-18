@@ -24971,10 +24971,10 @@ distributor Farnell 149-452</description>
 </variantdefs>
 <classes>
 <class number="0" name="default" width="0.4064" drill="0">
-<clearance class="0" value="0.2032"/>
+<clearance class="0" value="0.1016"/>
 </class>
 <class number="1" name="Power Lines" width="0.762" drill="0">
-<clearance class="1" value="0.2032"/>
+<clearance class="1" value="0.129540625"/>
 </class>
 </classes>
 <parts>
@@ -26492,35 +26492,6 @@ distributor Farnell 149-452</description>
 </nets>
 </sheet>
 </sheets>
-<errors>
-<approved hash="104,1,-17.78,12.7,U1,AVCC,N$8,,,"/>
-<approved hash="104,1,-177.8,-68.58,U2,VDD,VCC,,,"/>
-<approved hash="104,1,104.14,-12.7,HC05,+5V,VCC,,,"/>
-<approved hash="104,1,-33.02,-73.66,U$1,VDD,VCC,,,"/>
-<approved hash="104,1,-33.02,-76.2,U$1,VREF,VCC,,,"/>
-<approved hash="202,1,-33.02,-96.52,U$1,CH2,,,,"/>
-<approved hash="202,1,-33.02,-99.06,U$1,CH3,,,,"/>
-<approved hash="104,1,-281.94,-167.64,U3,VDD,VCC,,,"/>
-<approved hash="106,1,104.14,-15.24,KEY,,,,,"/>
-<approved hash="106,1,104.14,-2.54,STATE,,,,,"/>
-<approved hash="208,1,-121.92,76.2,VEE,out,,,,"/>
-<approved hash="208,1,-111.76,63.5,VEE,sup,,,,"/>
-<approved hash="208,1,-289.56,-180.34,VEE,sup,,,,"/>
-<approved hash="208,1,-297.18,-68.58,VEE,sup,,,,"/>
-<approved hash="110,1,48.26,0,N$13,GND,,,,"/>
-<approved hash="111,1,48.26,0,N$13,,,,,"/>
-<approved hash="113,1,57.3761,-123.111,PROBESELECT,,,,,"/>
-<approved hash="113,1,-166.492,-142.014,0.23CAL,,,,,"/>
-<approved hash="113,1,-167.201,-154.714,2.5CAL,,,,,"/>
-<approved hash="113,1,-166.492,-167.414,1.25CAL,,,,,"/>
-<approved hash="113,1,-102.413,110.49,POWER,,,,,"/>
-<approved hash="113,1,25.7217,0.804603,CAPTURING,,,,,"/>
-<approved hash="113,1,-374.692,-46.7639,PROBECON,,,,,"/>
-<approved hash="113,1,-193.04,99.06,B1,,,,,"/>
-<approved hash="113,1,-104.953,82.55,POWER1,,,,,"/>
-<approved hash="113,1,-175.26,120.419,F1,,,,,"/>
-<approved hash="113,1,-177.8,77.2389,F2,,,,,"/>
-</errors>
 </schematic>
 </drawing>
 <compatibility>
