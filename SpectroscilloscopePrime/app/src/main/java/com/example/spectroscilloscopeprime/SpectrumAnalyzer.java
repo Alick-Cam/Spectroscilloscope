@@ -11,20 +11,25 @@ import android.view.View;
 import android.view.Window;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class SpectrumAnalyzer extends AppCompatActivity {
-    private final float ts = 5e-6f; // minimum time between data points
+public class SpectrumAnalyzer extends AppCompatActivity{
+
     private final int nPoints = 512; // Number of data points
+    public final int lSampleFreq = 512;
+    public final int hSampleFreq = 200000;
     ArrayList<BarEntry> entries = new ArrayList<BarEntry>(); //To pass to BarDataSet
     ArrayList<Integer> twoByteData = new ArrayList<>();
-    BarDataSet barDataSet = new BarDataSet(entries, "frequencies"); //To pass to BarData
+    BarDataSet barDataSet = new BarDataSet(entries, "Magnitude"); //To pass to BarData
     BarData barData = new BarData(barDataSet);  // To pass to BarChart
     BarChart barChart;
     boolean stopFFTThread;
@@ -53,6 +58,7 @@ public class SpectrumAnalyzer extends AppCompatActivity {
         twoByteData = intent.getIntegerArrayListExtra(MainActivity.EXTRA_DATA);
         probeselect = intent.getBooleanExtra(MainActivity.EXTRA_PSEL,false);
         channelselect = intent.getBooleanExtra(MainActivity.EXTRA_CSEL,false);
+        // frequency = false => high frequency (200kSpS)
         frequencyselect = intent.getBooleanExtra(MainActivity.EXTRA_FSEL,false);
 
         Log.d("probeselect", Boolean.toString(probeselect));
@@ -101,24 +107,31 @@ public class SpectrumAnalyzer extends AppCompatActivity {
 
     private void customizeChart () {
         barChart.setBackgroundColor(Color.BLACK);
-        barChart.getLegend().setEnabled(false);
-        barChart.getDescription().setEnabled(false);
         barChart.setDrawBorders(true);
         barChart.setBorderColor(Color.WHITE);
         barChart.setBorderWidth(2f);
 
-        // Leave scaling for XAxis
-        barChart.getXAxis().setDrawLabels(false);
-        barChart.getXAxis().setGranularityEnabled(true);
+        // format legend
+        barChart.getLegend().setEnabled(true);
+        barChart.getLegend().setTextColor(Color.WHITE);
+
+        // format description text
+        barChart.getDescription().setEnabled(true); // false
+        barChart.getDescription().setTextColor(Color.WHITE);
+        barChart.getDescription().setText("512 point frequency spectrum");
+
+        // customize X Axis
+        barChart.getXAxis().setDrawLabels(true); // false
         barChart.getXAxis().setGridColor(Color.WHITE);
+        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        barChart.getXAxis().setTextColor(Color.WHITE);
         barChart.getXAxis().setAxisMinimum(0f);
 
-        // Pass Actual values to MPAndroid Chart library and the library will auto scale the Y Axis
-        barChart.getAxisRight().setEnabled(false);
-
+        // customise Y Axis
         barChart.getAxisLeft().setTextColor(Color.WHITE);
         barChart.getAxisLeft().setGridColor(Color.WHITE);
-
+        barChart.getAxisLeft().setAxisMinimum(0f);
+        barChart.getAxisRight().setAxisMinimum(0f);
     }
 
     private void createBarDataSet() {
@@ -130,6 +143,11 @@ public class SpectrumAnalyzer extends AppCompatActivity {
         barData.notifyDataChanged();
         barData.addDataSet(barDataSet);
         barData.notifyDataChanged();
+
+        // customize data
+        barData.setValueTextSize(10f);
+        barData.setValueTextColor(Color.WHITE);
+
         Log.d("Check BarData", Integer.toString(barData.getDataSetCount()));
         Log.d("State?", "Updated BarData with BarDataSet");
         barChart.notifyDataSetChanged();
@@ -154,6 +172,12 @@ class FastFourierTransform implements Runnable {
             FastFourierTransform fft = new FastFourierTransform(x);
             Complex[] FFTValues;
             FFTValues = fft.fft(x); //Store FFt values
+            float frequencyResolution = 0f;
+            if (frequencyselect) {
+                frequencyResolution = (float)lSampleFreq/nPoints;
+            } else {
+                frequencyResolution = (float)hSampleFreq/nPoints;
+            }
             double[] Abs = new double[nPoints]; // Store magnitudes
             for (int a = 0; a < x.length; a++) {
                 Log.d("Frequencies", "Re "+Double.toString(FFTValues[a].re())+" Im "+ Double.toString(FFTValues[a].im()));
