@@ -107,17 +107,13 @@ public class SpectrumAnalyzer extends AppCompatActivity {
         barChart.setBorderColor(Color.WHITE);
         barChart.setBorderWidth(2f);
 
-        //Leave scalling for XAxis
+        // Leave scaling for XAxis
         barChart.getXAxis().setDrawLabels(false);
         barChart.getXAxis().setGranularityEnabled(true);
-        //Max fs 200kHz, therefore min ts = 5e-6s
-        barChart.getXAxis().setGranularity(ts);
         barChart.getXAxis().setGridColor(Color.WHITE);
-        //Since were displaying 256 values ts * 256 = 1.28e-3
-        barChart.getXAxis().setAxisMaximum(ts*nPoints);
         barChart.getXAxis().setAxisMinimum(0f);
 
-        //Pass Actual values to MPAndroid Chart library and the library will auto scale the Y Axis
+        // Pass Actual values to MPAndroid Chart library and the library will auto scale the Y Axis
         barChart.getAxisRight().setEnabled(false);
 
         barChart.getAxisLeft().setTextColor(Color.WHITE);

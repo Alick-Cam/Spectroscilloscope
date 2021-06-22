@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
     LineChart lineChart;
 
     // March 27, 2021
-    boolean probeselect = true;
+    boolean probeselect = false;
     boolean frequencyselect;
-    boolean channelselect = false;
+    boolean channelselect = true;
 
     // April 1, 2021
     Switch probe;
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             voltage /= 10; // voltage at input of x10 gain circuit
         }
         /* following voltage at input of the front-end attenuator (voltage divider
-        Vin => 909k => voltage => 100k => 0.1u => GND */
+        Vin => 909k => voltage => 100k =>  GND */
         voltage*=1009;
         voltage/=100;
         if(probeselect) {
