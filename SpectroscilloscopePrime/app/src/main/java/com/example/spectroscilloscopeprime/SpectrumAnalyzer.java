@@ -4,29 +4,36 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class SpectrumAnalyzer extends AppCompatActivity{
+public class SpectrumAnalyzer extends AppCompatActivity  implements OnChartValueSelectedListener{
 
-    private final int nPoints = 512; // Number of data points
-    public final int lSampleFreq = 512;
-    public final int hSampleFreq = 200000;
+    public final static int nPoints = 512; // Number of data points
+    public final static int lSampleFreq = 512;
+    public final static int hSampleFreq = 200000;
     ArrayList<BarEntry> entries = new ArrayList<BarEntry>(); //To pass to BarDataSet
     ArrayList<Integer> twoByteData = new ArrayList<>();
     BarDataSet barDataSet = new BarDataSet(entries, "Magnitude"); //To pass to BarData
@@ -36,9 +43,9 @@ public class SpectrumAnalyzer extends AppCompatActivity{
     Handler handler = new Handler();
     Complex[] data = new Complex[nPoints];
 
-    boolean probeselect;
-    boolean channelselect;
-    boolean frequencyselect;
+    public static boolean probeselect;
+    public static boolean channelselect;
+    public static boolean frequencyselect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,7 @@ public class SpectrumAnalyzer extends AppCompatActivity{
 
         //Grab Chart
         barChart = findViewById(R.id.barChart);
-
+        barChart.setOnChartValueSelectedListener(this);
         // Customization of chart
         customizeChart();
 
@@ -67,7 +74,7 @@ public class SpectrumAnalyzer extends AppCompatActivity{
 
         // create the data set using values from the Oscilloscope Activity
         for (int i = 0; i < nPoints ; i ++) {
-            data[i] = new Complex(calculateSignal(probeselect, channelselect, twoByteData.get(i)), 0);
+            data[i] = new Complex(MainActivity.calculateSignal(probeselect, channelselect, twoByteData.get(i)), 0);
             Log.d("twoByteData", Integer.toString(twoByteData.get(i))+", index: "+Integer.toString(i));
         }
 
@@ -77,27 +84,30 @@ public class SpectrumAnalyzer extends AppCompatActivity{
         Thread FFT_thread = new Thread(FFT_runnable);
         FFT_thread.start();
     }
+    private final RectF onValueSelectedRectF = new RectF();
 
-    public float calculateSignal(boolean probeselect, boolean channelselect, int datapoint) {
-        // this function will calculate the actucal value of each datapoint and return it
-        /*
-         * probeselect = true => x10 probe else x1 probe
-         * channelselect = true => x10 adc channel gain else x1 adc channel gain was applied*/
-        float voltage = datapoint * MainActivity.STEPSIZE;
-        // 2.5V was added to shift the signal up for the MCU ADC, Therefore,
-        voltage -= 2.5;
-        if(channelselect) {
-            voltage /= 10; // voltage at input of x10 gain circuit
-        }
-        /* following voltage at input of the front-end attenuator (voltage divider
-        Vin => 909k => voltage => 100k => 0.1u => GND */
-        voltage*=1009;
-        voltage/=100;
-        if(probeselect) {
-            // if x10 probe was selected (meaning signal was divided by 10 before arriving)
-            voltage*=10;
-        }
-        return voltage;
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        if (e == null)
+            return;
+
+        RectF bounds = onValueSelectedRectF;
+        barChart.getBarBounds((BarEntry) e, bounds);
+        MPPointF position = barChart.getPosition(e, YAxis.AxisDependency.LEFT);
+
+        Log.i("bounds", bounds.toString());
+        Log.i("position", position.toString());
+
+        Log.i("x-index",
+                "low: " + barChart.getLowestVisibleX() + ", high: "
+                        + barChart.getHighestVisibleX());
+
+        MPPointF.recycleInstance(position);
+    }
+
+    @Override
+    public void onNothingSelected() {
+        Log.i("Activity", "Nothing selected.");
     }
 
     public void onClickMainActivity (View view) {
@@ -120,18 +130,27 @@ public class SpectrumAnalyzer extends AppCompatActivity{
         barChart.getDescription().setTextColor(Color.WHITE);
         barChart.getDescription().setText("512 point frequency spectrum");
 
+
         // customize X Axis
+        ValueFormatter xAxisFormatter = new FrequencyValFormatter();
+
         barChart.getXAxis().setDrawLabels(true); // false
         barChart.getXAxis().setGridColor(Color.WHITE);
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         barChart.getXAxis().setTextColor(Color.WHITE);
         barChart.getXAxis().setAxisMinimum(0f);
 
+        barChart.getXAxis().setValueFormatter(xAxisFormatter);
+
         // customise Y Axis
         barChart.getAxisLeft().setTextColor(Color.WHITE);
         barChart.getAxisLeft().setGridColor(Color.WHITE);
         barChart.getAxisLeft().setAxisMinimum(0f);
         barChart.getAxisRight().setAxisMinimum(0f);
+
+        XYMarkerView mv = new XYMarkerView(this, xAxisFormatter);
+        mv.setChartView(barChart); // For bounds control
+        barChart.setMarker(mv); // Set the marker to the chart
     }
 
     private void createBarDataSet() {
@@ -172,15 +191,10 @@ class FastFourierTransform implements Runnable {
             FastFourierTransform fft = new FastFourierTransform(x);
             Complex[] FFTValues;
             FFTValues = fft.fft(x); //Store FFt values
-            float frequencyResolution = 0f;
-            if (frequencyselect) {
-                frequencyResolution = (float)lSampleFreq/nPoints;
-            } else {
-                frequencyResolution = (float)hSampleFreq/nPoints;
-            }
+
             double[] Abs = new double[nPoints]; // Store magnitudes
-            for (int a = 0; a < x.length; a++) {
-                Log.d("Frequencies", "Re "+Double.toString(FFTValues[a].re())+" Im "+ Double.toString(FFTValues[a].im()));
+            for (int a = 0; a < (x.length/2); a++) {
+                Log.d("Frequency " + Integer.toString(a), "Re "+Double.toString(FFTValues[a].re())+" Im "+ Double.toString(FFTValues[a].im()));
                 Abs[a] = FFTValues[a].abs();
 //                    entries.add(new BarEntry(a, (float) Abs[a]));
                 entries.add(a, new BarEntry(a, (float)Abs[a]));

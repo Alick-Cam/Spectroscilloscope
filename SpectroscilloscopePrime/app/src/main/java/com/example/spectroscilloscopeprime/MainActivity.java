@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Plotted data", Toast.LENGTH_SHORT).show();
     }
 
-    public float calculateSignal(boolean probeselect, boolean channelselect, int datapoint) {
+    public static float calculateSignal(boolean probeselect, boolean channelselect, int datapoint) {
         // this function will calculate the actucal value of each datapoint and return it
         /*
          * probeselect = true => x10 probe else x1 probe
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Toast.makeText(this,"Sent Data: "+string, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Capturing", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickStop(View view) {
