@@ -31,8 +31,8 @@ import java.util.UUID;
 
 public class SpectrumAnalyzer extends AppCompatActivity  implements OnChartValueSelectedListener{
 
-    public final static int nPoints = 512; // Number of data points
-    public final static int lSampleFreq = 512;
+    public final static int nPoints = 256; // Number of data points
+    public final static int lSampleFreq = 256;
     public final static int hSampleFreq = 200000;
     ArrayList<BarEntry> entries = new ArrayList<BarEntry>(); //To pass to BarDataSet
     ArrayList<Integer> twoByteData = new ArrayList<>();
@@ -128,7 +128,7 @@ public class SpectrumAnalyzer extends AppCompatActivity  implements OnChartValue
         // format description text
         barChart.getDescription().setEnabled(true); // false
         barChart.getDescription().setTextColor(Color.WHITE);
-        barChart.getDescription().setText("512 point frequency spectrum");
+        barChart.getDescription().setText("256 point frequency spectrum");
 
 
         // customize X Axis

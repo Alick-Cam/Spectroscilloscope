@@ -17,6 +17,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -38,15 +39,15 @@ public class MainActivity extends AppCompatActivity {
     // TODO - Add a high/low frequency switch to provide two sample rate options
     // TODO - Add functionality to the existing switch
     // TODO - Add code to send and recieve configuration data for the channel and samplerate options
-    private final String DEVICE_ADDRESS = "98:D6:32:35:8F:C6";
+    private final String DEVICE_ADDRESS = "98:D6:32:35:8B:3C";
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");//Serial Port Service ID
     // string to tag the data that will be sent to the Spectrum Analyzer Activity
     public static final String EXTRA_DATA = "com.example.spectroscilloscopeprime.EXTRA_DATA";
     public static final String EXTRA_FSEL = "com.example.spectroscilloscopeprime.EXTRA_FSEL";
     public static final String EXTRA_PSEL = "com.example.spectroscilloscopeprime.EXTRA_PSEL";
     public static final String EXTRA_CSEL = "com.example.spectroscilloscopeprime.EXTRA_CSEL";
-    private final float ts = 5e-6f; // minimum time between data points
-    private final int nPoints = 512; // Number of data points
+    private float ts = 5e-6f; // minimum time between data points
+    private final int nPoints = 256; // Number of data points
     public static final float STEPSIZE = 4.8828125e-3f;
 
     // this is the list that accepts data from the bluetooth socket
@@ -61,19 +62,23 @@ public class MainActivity extends AppCompatActivity {
     private InputStream inputStream;
     Handler handler = new Handler();
 
+    // indicators
+    TextView status;
+    TextView samplerate;
+    TextView channel;
+
     //StateVariables
     boolean stopBTThread;
     boolean deviceConnected = false;
     boolean dataReady = false;
-    Button connectButton, sendButton, stopButton;
 
     // Line Chart
     LineChart lineChart;
 
     // March 27, 2021
-    boolean probeselect = false;
+    boolean probeselect;
     boolean frequencyselect;
-    boolean channelselect = true;
+    boolean channelselect;
 
     // April 1, 2021
     Switch probe;
@@ -89,11 +94,15 @@ public class MainActivity extends AppCompatActivity {
         setTitle("LineChart - Objective 2");
 
         // Obtain all elements of the User Interface
-        connectButton = findViewById(R.id.connectButton);
-        sendButton = findViewById(R.id.beginButton);
-        stopButton = findViewById(R.id.stopButton);
+        status = findViewById(R.id.status);
+        samplerate = findViewById(R.id.samplerate);
+        channel = findViewById(R.id.channel);
         lineChart = findViewById(R.id.line_chart);
 
+        // default indicators
+        status.setText("Disconnected");
+        samplerate.setText("200kSPS");
+        channel.setText("NaN");
         // connect to Spectroscilloscope on the creation of the activity
         initiateConnection();
 
@@ -111,6 +120,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void plotData(ArrayList<Entry> entries) {
+        // set ts
+        if (!frequencyselect) {
+            ts = 5e-6f;
+        } else {
+            ts = 3.90625e-3f;
+        }
+        // set the y axis scale depending on the signal path being measured
+        if (probeselect == channelselect) {
+            // +/- 30
+            lineChart.getAxisLeft().setAxisMaximum(30);
+            lineChart.getAxisLeft().setAxisMinimum(-30);
+        } else if (!probeselect && channelselect) {
+            // +/- 3
+            lineChart.getAxisLeft().setAxisMaximum(3);
+            lineChart.getAxisLeft().setAxisMinimum(-3);
+        } else if (probeselect && !channelselect) {
+            // +/- 270
+            lineChart.getAxisLeft().setAxisMaximum(270);
+            lineChart.getAxisLeft().setAxisMinimum(-270);
+        }
+        customizeChart ();
         LineDataSet lineDataSet1 = new LineDataSet(entries,null);
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSet1);
@@ -238,7 +268,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickStartTransmission(View view) {
         //String string = editText.getText().toString();
-        String string = "t";
+        String string;
+        if (frequencyselect == false) {
+            string = "t"; // Spectroscilloscope will use HF
+        }else {
+            string = "q"; // Spectroscilloscope will use LF
+        }
         string.concat("\n");
         try {
             outputStream.write(string.getBytes());
@@ -280,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 deviceConnected=true;
                 beginListenForData();
+                status.setText("Connected!");
                 Toast.makeText(this, "Connected to  Spectroscilloscope!", Toast.LENGTH_SHORT).show();
             }
 
@@ -292,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
         inputStream.close();
         socket.close();
         deviceConnected=false;
+        status.setText("Disconnected");
         Toast.makeText(this, "Connection Closed!", Toast.LENGTH_SHORT).show();
     }
 
@@ -309,9 +346,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    probeselect = true; // true when x1 probe
+                    probeselect = true; // true when x10 probe
+
                 } else {
-                    probeselect = false; // false when x10 probe
+                    probeselect = false; // false when x1 probe
                 }
             }
         });
@@ -326,9 +364,11 @@ public class MainActivity extends AppCompatActivity {
                 if(isChecked) {
                     // true = low frequency so samplerate = 256
                     frequencyselect = true;
+                    samplerate.setText("256SPS");
                 } else {
-                    // false = high frequency so sample rate > 256
+                    // false = high frequency so samplesample rate is 200000
                     frequencyselect = false;
+                    samplerate.setText("200kSPS");
                 }
             }
         });
@@ -346,6 +386,7 @@ public class MainActivity extends AppCompatActivity {
                     int byteCount = inputStream.available();
                     if(byteCount > 0)
                     {
+                        Log.d("byteCount", Integer.toString(byteCount));
                         byte[] rawBytes = new byte[byteCount];
                         inputStream.read(rawBytes);
 
@@ -358,8 +399,38 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         // Use this to make the program aware of when the expected data has completely arrived
-                        if(temp.size() == (nPoints * 2)) {
+                        // add the two because the channel data will be stored in the arraylist
+                        if(temp.size() == (nPoints * 2)+2) {
                             dataReady = true;
+                            int[] channelD = new int[2];
+                            channelD[0] = temp.get(0);
+                            channelD[1] = temp.get(1);
+                            int Channel = channelD[0]<<8 + channelD[1];
+                            if(channelD[1] == 1) {
+                                channelselect = true;
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run()
+                                    {
+                                        channel.setText("x10 Channel");
+
+                                    }
+                                });
+                            }else if (channelD[1] == 0) {
+                                channelselect = false;
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run()
+                                    {
+                                        channel.setText("x1 Channel");
+
+                                    }
+                                });
+                            }
+                            Log.d("Channel Selected", Integer.toString(Channel));
+                            // remove channel overhead
+                            temp.remove(0);
+                            temp.remove(0);
                         }
 
                         if(dataReady) {

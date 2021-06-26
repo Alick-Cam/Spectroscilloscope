@@ -10,4 +10,7 @@
     <string name="graph">Graph</string>
     <string name="stop">Stop</string>
     <string name="back">Back to Oscilloscope</string>
-</resources>
+    <string name="connectedIndicator">Status :</string>
+    <string name="samplerateIndicator">SampleRate :</string>
+    <string name="channelIndicator">Channel :</string>
+    </resources>

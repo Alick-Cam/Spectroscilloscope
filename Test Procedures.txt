@@ -1,0 +1,18 @@
+Requirement
+Frequency - <=20000Hz
+Test 
+Using a constant ampitude test the following:
+0 Hz 
+1kHz
+2kHz
+3kHz
+...
+20kHz
+
+AC Amplitude - <= 250V
+Using constant frequency test the following:
+0V
+5V
+10V
+...
+250V

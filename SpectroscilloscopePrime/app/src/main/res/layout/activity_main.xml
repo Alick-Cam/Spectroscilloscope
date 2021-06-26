@@ -10,75 +10,24 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart"
         android:layout_width="match_parent"
-        android:layout_height="496sp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/beginButton"
-        app:layout_constraintVertical_bias = "1.0"
-        />
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/connectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:onClick="onClickConnect"
         android:text="@string/connect"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/probeS"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickStop"
-        android:text="@string/disconnect"
-        app:layout_constraintBottom_toBottomOf="@+id/beginButton"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/beginButton"
-        app:layout_constraintTop_toTopOf="@+id/beginButton"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Switch
-        android:id="@+id/freqS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/FreqS"
-        app:layout_constraintBottom_toBottomOf="@+id/probeS"
-        app:layout_constraintEnd_toStartOf="@+id/beginButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/probeS"
-        app:layout_constraintTop_toTopOf="@+id/probeS"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickSpectrumAnalysis"
-        android:text="@string/spectrum"
-        app:layout_constraintBottom_toBottomOf="@+id/stopButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/stopButton"
-        app:layout_constraintTop_toTopOf="@+id/stopButton"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Switch
-        android:id="@+id/probeS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/probeS"
-        app:layout_constraintBottom_toBottomOf="@+id/connectButton"
-        app:layout_constraintEnd_toStartOf="@+id/freqS"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/connectButton"
-        app:layout_constraintTop_toTopOf="@+id/connectButton"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintStart_toEndOf="@+id/guideline5" />
 
     <Button
         android:id="@+id/beginButton"
@@ -86,12 +35,148 @@
         android:layout_height="wrap_content"
         android:onClick="onClickStartTransmission"
         android:text="@string/capture"
-        app:layout_constraintBottom_toBottomOf="@+id/freqS"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/stopButton"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/freqS"
-        app:layout_constraintTop_toTopOf="@+id/freqS"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintStart_toEndOf="@+id/freqS" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickStop"
+        android:text="@string/disconnect"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/beginButton" />
+
+    <Switch
+        android:id="@+id/freqS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/FreqS"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/beginButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/probeS" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickSpectrumAnalysis"
+        android:text="@string/spectrum"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/stopButton" />
+
+    <Switch
+        android:id="@+id/probeS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/probeS"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/freqS"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/connectButton" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <TextView
+        android:id="@+id/channelInd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/channelIndicator"
+        app:layout_constraintBottom_toTopOf="@+id/sampleRateInd"
+        app:layout_constraintStart_toStartOf="@+id/sampleRateInd"
+        app:layout_constraintTop_toBottomOf="@+id/connectInd" />
+
+    <TextView
+        android:id="@+id/connectInd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/connectedIndicator"
+        app:layout_constraintBottom_toTopOf="@+id/channelInd"
+        app:layout_constraintStart_toStartOf="@+id/channelInd"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+    <TextView
+        android:id="@+id/sampleRateInd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/samplerateIndicator"
+        app:layout_constraintBottom_toTopOf="@+id/line_chart"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/channelInd" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/channel"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+    <TextView
+        android:id="@+id/channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/samplerate"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/status" />
+
+    <TextView
+        android:id="@+id/samplerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/line_chart"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/channel" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.01" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

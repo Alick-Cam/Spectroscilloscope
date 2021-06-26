@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    tools:context=".MainActivity">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="496sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beginButton"
+        app:layout_constraintVertical_bias = "1.0"
+        />
+
+    <Button
+        android:id="@+id/connectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="onClickConnect"
+        android:text="@string/connect"
+        app:layout_constraintEnd_toStartOf="@+id/probeS"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickStop"
+        android:text="@string/disconnect"
+        app:layout_constraintBottom_toBottomOf="@+id/beginButton"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/beginButton"
+        app:layout_constraintTop_toTopOf="@+id/beginButton"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Switch
+        android:id="@+id/freqS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/FreqS"
+        app:layout_constraintBottom_toBottomOf="@+id/probeS"
+        app:layout_constraintEnd_toStartOf="@+id/beginButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/probeS"
+        app:layout_constraintTop_toTopOf="@+id/probeS"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickSpectrumAnalysis"
+        android:text="@string/spectrum"
+        app:layout_constraintBottom_toBottomOf="@+id/stopButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/stopButton"
+        app:layout_constraintTop_toTopOf="@+id/stopButton"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Switch
+        android:id="@+id/probeS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/probeS"
+        app:layout_constraintBottom_toBottomOf="@+id/connectButton"
+        app:layout_constraintEnd_toStartOf="@+id/freqS"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/connectButton"
+        app:layout_constraintTop_toTopOf="@+id/connectButton"
+        app:layout_constraintVertical_bias="0.666" />
+
+    <Button
+        android:id="@+id/beginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickStartTransmission"
+        android:text="@string/capture"
+        app:layout_constraintBottom_toBottomOf="@+id/freqS"
+        app:layout_constraintEnd_toStartOf="@+id/stopButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/freqS"
+        app:layout_constraintTop_toTopOf="@+id/freqS"
+        app:layout_constraintVertical_bias="0.476" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
