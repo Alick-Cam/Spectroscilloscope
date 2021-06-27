@@ -8,11 +8,7 @@ public class FrequencyValFormatter extends ValueFormatter {
     public String getFormattedValue(float value) {
         int index = (int)value;
         float frequencyBinResolution = 0f;
-        if (SpectrumAnalyzer.frequencyselect) {
-            frequencyBinResolution = (float)SpectrumAnalyzer.lSampleFreq/SpectrumAnalyzer.nPoints;
-        } else {
-            frequencyBinResolution = (float)SpectrumAnalyzer.hSampleFreq/SpectrumAnalyzer.nPoints;
-        }
+        frequencyBinResolution = (float)MainActivity.SAMPLERATE/MainActivity.nPoints;
         float frequencyBinVal = index * frequencyBinResolution;
 
         return Float.toString(frequencyBinVal)+"Hz";

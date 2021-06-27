@@ -10,6 +10,7 @@ int samples1[nPoints];
 int samples10[nPoints];
 unsigned char data[2*nPoints];
 unsigned char channelD[2];
+unsigned char samplerate[2];
 void setup() {
   // put your setup code here, to run once:
   SPI_setup();
@@ -20,9 +21,7 @@ void setup() {
 void loop() {
   /*
   Wait for cature signal from Android device (t => HF, q => LF
-  Sample from x10 channel 
   Sample from x1 channel 
-  Determine which channel has better resolution
   Send Channel 
   Send data
   */
@@ -30,18 +29,22 @@ void loop() {
    char sCommand = Spectros.read();
    if (sCommand == 't') {
     // use HF
+    unsigned long starttime = millis();
     for (int i = 0; i < nPoints ; i ++) {
       samples1[i] = readADC(X1CHANNEL);
 //      delayMicroseconds(10); // 200kSPS
     }
-    for (int i = 0; i < nPoints ; i ++) {
-      samples10[i] = readADC(X10CHANNEL);
-//      delayMicroseconds(10); // 200kSPS
-    }
-    int channel = chooseChannel();
+    unsigned long timeelapsed = millis()-starttime;
+    int sampleRate = (int)(1/((timeelapsed/1000.0)/256.0));
+    samplerate[0] = sampleRate >>8;
+    samplerate[1]  = sampleRate & 0b0000000011111111;
+    int channel = X1CHANNEL;
     toUnsignedChar(channel);
     channelD[0] = channel >>8;
     channelD[1] = channel & 0b0000000011111111;
+    // send sample rate
+    Spectros.write(samplerate[0]);
+    Spectros.write(samplerate[1]);    
     // send channel
     Spectros.write(channelD[0]);
     Spectros.write(channelD[1]);
@@ -51,22 +54,25 @@ void loop() {
       
    }else if (sCommand == 'q') {
     // Use LF
+    unsigned long starttime = millis();
     for (int i = 0; i < nPoints ; i ++) {
       samples1[i] = readADC(X1CHANNEL);
       delay(4); // 256SPS
     }
-    for (int i = 0; i < nPoints ; i ++) {
-      samples10[i] = readADC(X10CHANNEL);
-      delay(4); // 256SPS
-    }
-    int channel = chooseChannel();
+    unsigned long timeelapsed = millis()-starttime;
+    int sampleRate = (int)(1/((timeelapsed/1000.0)/256.0));
+    samplerate[0] = sampleRate >>8;
+    samplerate[1]  = sampleRate & 0b0000000011111111;
+    int channel = X1CHANNEL;
     toUnsignedChar(channel);
     channelD[0] = channel >>8;
     channelD[1] = channel & 0b0000000011111111;
+    // send sample rate
+    Spectros.write(samplerate[0]);
+    Spectros.write(samplerate[1]); 
     // send channel
     Spectros.write(channelD[0]);
     Spectros.write(channelD[1]);
-    
     for (int i = 0; i < 2*nPoints; i++) {
       Spectros.write(data[i]);
     }    
@@ -111,21 +117,4 @@ int readADC(byte channel){
   int reading = ((readingH & 0b00000011) << 8) + (readingL); // Per datasheet, we know that only the last two bits of our first transfer contain useful info. The second byte is all useful.
 
   return reading;
-}
-
-unsigned char chooseChannel() {
-  // channel with X10 gain has more priority
-  unsigned char select;
-  int inRangeCount10 = 0;
-  for (int i = 0; i < nPoints; i++) {
-    if (samples10[i] < 1023 && samples10[i] > 0) {
-      inRangeCount10++;
-    }
-  }
-  if(inRangeCount10 == nPoints){
-    select = X10CHANNEL;
-  } else {
-    select = X1CHANNEL;
-  }
-  return select;
 }

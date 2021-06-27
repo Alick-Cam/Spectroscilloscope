@@ -31,9 +31,7 @@ import java.util.UUID;
 
 public class SpectrumAnalyzer extends AppCompatActivity  implements OnChartValueSelectedListener{
 
-    public final static int nPoints = 256; // Number of data points
-    public final static int lSampleFreq = 256;
-    public final static int hSampleFreq = 200000;
+
     ArrayList<BarEntry> entries = new ArrayList<BarEntry>(); //To pass to BarDataSet
     ArrayList<Integer> twoByteData = new ArrayList<>();
     BarDataSet barDataSet = new BarDataSet(entries, "Magnitude"); //To pass to BarData
@@ -41,7 +39,7 @@ public class SpectrumAnalyzer extends AppCompatActivity  implements OnChartValue
     BarChart barChart;
     boolean stopFFTThread;
     Handler handler = new Handler();
-    Complex[] data = new Complex[nPoints];
+    Complex[] data = new Complex[MainActivity.nPoints];
 
     public static boolean probeselect;
     public static boolean channelselect;
@@ -73,7 +71,7 @@ public class SpectrumAnalyzer extends AppCompatActivity  implements OnChartValue
         Log.d("frequencyselect", Boolean.toString(frequencyselect));
 
         // create the data set using values from the Oscilloscope Activity
-        for (int i = 0; i < nPoints ; i ++) {
+        for (int i = 0; i < MainActivity.nPoints ; i ++) {
             data[i] = new Complex(MainActivity.calculateSignal(probeselect, channelselect, twoByteData.get(i)), 0);
             Log.d("twoByteData", Integer.toString(twoByteData.get(i))+", index: "+Integer.toString(i));
         }
@@ -192,7 +190,7 @@ class FastFourierTransform implements Runnable {
             Complex[] FFTValues;
             FFTValues = fft.fft(x); //Store FFt values
 
-            double[] Abs = new double[nPoints]; // Store magnitudes
+            double[] Abs = new double[MainActivity.nPoints]; // Store magnitudes
             for (int a = 0; a < (x.length/2); a++) {
                 Log.d("Frequency " + Integer.toString(a), "Re "+Double.toString(FFTValues[a].re())+" Im "+ Double.toString(FFTValues[a].im()));
                 Abs[a] = FFTValues[a].abs();

@@ -4,13 +4,23 @@
 
 void setup() {
   Serial.begin(9600);
-    
+  pinMode(A0, INPUT);
+   SPI_setup(); 
 }
 
 void loop() {
   //collect 
-  int reading = readADC(0);
-  Serial.println(reading);
+  long reading = 0;
+  unsigned long starttime = millis();
+  for(int i = 0; i < 256; i++) {
+    reading += readADC(0);
+//  reading += analogRead(A0);
+    delay(4);
+  }
+  unsigned long timeelapsed = millis()-starttime;
+  Serial.println(reading/256);
+  Serial.println(timeelapsed);
+  Serial.print("Sample frequecy - ");Serial.println(1/((timeelapsed/1000.0)/256.0));
   delay(1000);
 }
 

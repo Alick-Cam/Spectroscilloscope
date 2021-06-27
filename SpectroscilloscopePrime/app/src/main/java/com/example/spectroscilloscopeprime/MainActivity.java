@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_PSEL = "com.example.spectroscilloscopeprime.EXTRA_PSEL";
     public static final String EXTRA_CSEL = "com.example.spectroscilloscopeprime.EXTRA_CSEL";
     private float ts = 5e-6f; // minimum time between data points
-    private final int nPoints = 256; // Number of data points
-    public static final float STEPSIZE = 4.8828125e-3f;
-
+    public static final int nPoints = 256; // Number of data points
+    public static final float STEPSIZE = 4.638671875e-3f; // actual voltage supply and reference
+    public static int SAMPLERATE = 0;
     // this is the list that accepts data from the bluetooth socket
     ArrayList<Integer> temp = new ArrayList <Integer> ();
 
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
         // default indicators
         status.setText("Disconnected");
-        samplerate.setText("200kSPS");
+        samplerate.setText("HF");
         channel.setText("NaN");
         // connect to Spectroscilloscope on the creation of the activity
         initiateConnection();
@@ -151,13 +151,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static float calculateSignal(boolean probeselect, boolean channelselect, int datapoint) {
-        // this function will calculate the actucal value of each datapoint and return it
+        // this function will calculate the actual value of each datapoint and return it
         /*
          * probeselect = true => x10 probe else x1 probe
          * channelselect = true => x10 adc channel gain else x1 adc channel gain was applied*/
         float voltage = datapoint * STEPSIZE;
-        // 2.5V was added to shift the signal up for the MCU ADC, Therefore,
-        voltage -= 2.5;
+        // 2.5V (2.16V) was added to shift the signal up for the MCU ADC, Therefore,
+        voltage -= 2.16;
         if(channelselect) {
             voltage /= 10; // voltage at input of x10 gain circuit
         }
@@ -364,11 +364,11 @@ public class MainActivity extends AppCompatActivity {
                 if(isChecked) {
                     // true = low frequency so samplerate = 256
                     frequencyselect = true;
-                    samplerate.setText("256SPS");
+                    samplerate.setText("LF");
                 } else {
                     // false = high frequency so samplesample rate is 200000
                     frequencyselect = false;
-                    samplerate.setText("200kSPS");
+                    samplerate.setText("HF");
                 }
             }
         });
@@ -399,12 +399,29 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         // Use this to make the program aware of when the expected data has completely arrived
-                        // add the two because the channel data will be stored in the arraylist
-                        if(temp.size() == (nPoints * 2)+2) {
+                        // add the 4 because the channel data and sample rate will be stored in the arraylist
+                        if(temp.size() == (nPoints * 2)+4) {
                             dataReady = true;
+                            int[] sampleRate = new int[2];
+                            sampleRate[0] = temp.get(0);
+                            sampleRate[1] = temp.get(1);
+                            int SRate = sampleRate[0]<<8 + sampleRate[1];
+                            if (SRate == 0) {
+                                SRate = sampleRate[1];
+                            }
+                            final int TSRate = SRate;
+                            SAMPLERATE = SRate;
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run()
+                                {
+                                    samplerate.setText(Integer.toString(TSRate) + "SPS");
+                                }
+                            });
+                            Log.d("Sample Rate", Integer.toString((SRate)));
                             int[] channelD = new int[2];
-                            channelD[0] = temp.get(0);
-                            channelD[1] = temp.get(1);
+                            channelD[0] = temp.get(2);
+                            channelD[1] = temp.get(3);
                             int Channel = channelD[0]<<8 + channelD[1];
                             if(channelD[1] == 1) {
                                 channelselect = true;
@@ -428,7 +445,9 @@ public class MainActivity extends AppCompatActivity {
                                 });
                             }
                             Log.d("Channel Selected", Integer.toString(Channel));
-                            // remove channel overhead
+                            // remove channel and sample rate overhead
+                            temp.remove(0);
+                            temp.remove(0);
                             temp.remove(0);
                             temp.remove(0);
                         }
