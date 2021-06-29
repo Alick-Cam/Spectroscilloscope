@@ -44,7 +44,7 @@ void loop() {
     channelD[1] = channel & 0b0000000011111111;
     // send sample rate
     Spectros.write(samplerate[0]);
-    Spectros.write(samplerate[1]);    
+    Spectros.write(samplerate[1]);      
     // send channel
     Spectros.write(channelD[0]);
     Spectros.write(channelD[1]);

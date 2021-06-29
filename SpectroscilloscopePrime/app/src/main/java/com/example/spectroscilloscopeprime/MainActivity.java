@@ -29,6 +29,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     TextView status;
     TextView samplerate;
     TextView channel;
-
+    TextView VDC;
+    TextView PEAK;
     //StateVariables
     boolean stopBTThread;
     boolean deviceConnected = false;
@@ -97,12 +99,20 @@ public class MainActivity extends AppCompatActivity {
         status = findViewById(R.id.status);
         samplerate = findViewById(R.id.samplerate);
         channel = findViewById(R.id.channel);
+        VDC = findViewById(R.id.dc);
+        PEAK = findViewById(R.id.peak);
+        probe = findViewById(R.id.probeS);
         lineChart = findViewById(R.id.line_chart);
 
         // default indicators
         status.setText("Disconnected");
         samplerate.setText("HF");
         channel.setText("NaN");
+
+        // default probe
+        probeselect = true;
+        probe.setChecked(probeselect);
+
         // connect to Spectroscilloscope on the creation of the activity
         initiateConnection();
 
@@ -120,12 +130,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void plotData(ArrayList<Entry> entries) {
-        // set ts
-        if (!frequencyselect) {
-            ts = 5e-6f;
-        } else {
-            ts = 3.90625e-3f;
-        }
         // set the y axis scale depending on the signal path being measured
         if (probeselect == channelselect) {
             // +/- 30
@@ -148,6 +152,21 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(data);
         lineChart.invalidate();
         Toast.makeText(this, "Plotted data", Toast.LENGTH_SHORT).show();
+        // find DC content and peak
+        float dccontent = 0f;
+        float peak = 0f;
+        for (int i = 0 ; i < nPoints; i++){
+            dccontent += entries.get(i).getY();
+            if (entries.get(i).getY() > peak) {
+                peak = entries.get(i).getY();
+            }
+        }
+        dccontent /= nPoints;
+        DecimalFormat df = new DecimalFormat("#.##");
+        String formatted = df.format(dccontent);
+        VDC.setText(formatted+"V");
+        formatted = df.format(peak);
+        PEAK.setText(formatted+"V");
     }
 
     public static float calculateSignal(boolean probeselect, boolean channelselect, int datapoint) {
@@ -167,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         voltage/=100;
         if(probeselect) {
             // if x10 probe was selected (meaning signal was divided by 10 before arriving)
-            voltage*=10;
+            voltage/=0.0928;
         }
         return voltage;
     }
@@ -183,11 +202,9 @@ public class MainActivity extends AppCompatActivity {
         //Leave scalling for XAxis
         lineChart.getXAxis().setDrawLabels(false);
         lineChart.getXAxis().setGranularityEnabled(true);
-        //Max fs 200kHz, therefore min ts = 5e-6s
-        lineChart.getXAxis().setGranularity(ts);
         lineChart.getXAxis().setGridColor(Color.WHITE);
-        //Since were displaying 256 values ts * 256 = 1.28e-3
-        lineChart.getXAxis().setAxisMaximum(ts*nPoints);
+        //Since were displaying 256 values
+        lineChart.getXAxis().setAxisMaximum(nPoints);
         lineChart.getXAxis().setAxisMinimum(0f);
 
         //Pass Actual values to MPAndroid Chart library and the library will auto scale the Y Axis
@@ -268,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickStartTransmission(View view) {
         //String string = editText.getText().toString();
+        Log.d("Button clicked", "onClickStartTransmission: ");
         String string;
         if (frequencyselect == false) {
             string = "t"; // Spectroscilloscope will use HF
@@ -279,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
             outputStream.write(string.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
+            Log.d("Exception", "thown ");
         }
         Toast.makeText(this,"Capturing", Toast.LENGTH_SHORT).show();
     }
@@ -341,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
 
     // used to change the probe
     public void probeSelector() {
-        probe = (Switch) findViewById(R.id.probeS);
+
         probe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -459,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < nPoints; i++) {
                                 a = temp.get(2*i) << 8;
                                 twoByteData.add(a + temp.get(2*i + 1));
-                                entries.add(i , new Entry(i*ts, calculateSignal(probeselect,channelselect, twoByteData.get(i))));
+                                entries.add(i , new Entry(i, calculateSignal(probeselect,channelselect, twoByteData.get(i))));
                                 Log.d("twoByteData", Integer.toString(twoByteData.get(i))+", index: "+Integer.toString(i));
                                 if(i == (nPoints - 1) ) {
                                     // reset variables so more data can be collected
