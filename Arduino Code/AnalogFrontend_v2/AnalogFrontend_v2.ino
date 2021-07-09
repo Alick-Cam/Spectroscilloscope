@@ -27,6 +27,7 @@ void loop() {
   */
    if (Spectros.available()) {
    char sCommand = Spectros.read();
+   Serial.println(sCommand);
    if (sCommand == 't') {
     // use HF
     unsigned long starttime = millis();

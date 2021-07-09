@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void plotData(ArrayList<Entry> entries) {
         // set the y axis scale depending on the signal path being measured
         if (probeselect == channelselect) {
@@ -184,9 +185,14 @@ public class MainActivity extends AppCompatActivity {
         Vin => 909k => voltage => 100k =>  GND */
         voltage*=1009;
         voltage/=100;
+//        voltage /= 0.086;
         if(probeselect) {
             // if x10 probe was selected (meaning signal was divided by 10 before arriving)
             voltage/=0.0928;
+            voltage += 1.75;
+//            voltage*=15.38;
+        } else {
+            voltage += 0.173;
         }
         return voltage;
     }
